@@ -89,7 +89,14 @@ export default function Landing() {
 
       <footer className="px-6 py-6 text-xs text-ink-subtle border-t border-paper-edge">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <span>An open source project by Clay Garner.</span>
+          <a
+            href="https://www.linkedin.com/in/garnerclay/"
+            target="_blank"
+            rel="noreferrer"
+            className="hover:text-ink transition"
+          >
+            An open source project by Clay Garner.
+          </a>
           <Link to="/about" className="hover:text-ink transition">
             About
           </Link>
