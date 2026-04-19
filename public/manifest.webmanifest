@@ -1,0 +1,25 @@
+{
+  "name": "PACEY — Backup Communications Plan",
+  "short_name": "PACEY",
+  "description": "A backup communication plan for you, your household, or your organization.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#c2410c",
+  "background_color": "#fafaf7",
+  "icons": [
+    {
+      "src": "/pacey-mascot.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pacey-mascot.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

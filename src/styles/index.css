@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply bg-paper text-ink antialiased;
+    font-feature-settings: 'ss01', 'cv11';
+  }
+  body {
+    @apply min-h-screen;
+  }
+  h1, h2, h3 {
+    @apply text-ink tracking-tight;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-signal;
+  }
+}
+
+@media print {
+  @page {
+    size: letter;
+    margin: 0.75in;
+  }
+
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  [data-print="hide"] {
+    display: none !important;
+  }
+
+  /* Full-plan document mode */
+  [data-print="document"] {
+    font-family: 'Source Serif Pro', 'Iowan Old Style', Georgia, serif;
+    color: #000;
+    background: #fff;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    max-width: none !important;
+  }
+
+  [data-print="document"] h1,
+  [data-print="document"] h2,
+  [data-print="document"] h3 {
+    page-break-after: avoid;
+  }
+
+  [data-print="document"] section {
+    page-break-inside: avoid;
+  }
+
+  /* Wallet-card mode: centered on letter, page break between front and back */
+  html[data-print-mode="card"] {
+    /* Tighter margin — we center the small card on the page and don't need the document margin. */
+  }
+
+  html[data-print-mode="card"] [data-print="card-front"],
+  html[data-print-mode="card"] [data-print="card-back"] {
+    display: flex !important;
+    margin: 0 auto !important;
+    box-shadow: none !important;
+    border: 1px dashed #999 !important;
+    page-break-inside: avoid;
+  }
+
+  html[data-print-mode="card"] [data-print="card-front"] {
+    page-break-after: always;
+  }
+
+  html[data-print-mode="card"] [data-print="card-back"] {
+    page-break-after: auto;
+  }
+}
