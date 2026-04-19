@@ -1,8 +1,8 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import Anthropic from '@anthropic-ai/sdk'
-import { SYSTEM_PROMPT } from '../src/prompts/system'
-import { PLAN_JSON_SCHEMA } from '../src/lib/jsonSchema'
-import { planOutputSchema } from '../src/lib/schema'
+import { SYSTEM_PROMPT } from '../src/prompts/system.js'
+import { PLAN_JSON_SCHEMA } from '../src/lib/jsonSchema.js'
+import { planOutputSchema } from '../src/lib/schema.js'
 
 const MODEL = 'claude-sonnet-4-6'
 
