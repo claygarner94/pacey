@@ -10,8 +10,8 @@ type Props = {
   docRef: React.RefObject<HTMLDivElement | null>
   cardRef: React.RefObject<HTMLDivElement | null>
   view: PlanView
-  onRegenerate: () => void
-  onMakeCard: () => void
+  onShowCard: () => void
+  onShowWorksheet: () => void
 }
 
 export function PlanActions({
@@ -19,8 +19,8 @@ export function PlanActions({
   docRef,
   cardRef,
   view,
-  onRegenerate,
-  onMakeCard,
+  onShowCard,
+  onShowWorksheet,
 }: Props) {
   const navigate = useNavigate()
   const [downloading, setDownloading] = useState(false)
@@ -54,7 +54,7 @@ export function PlanActions({
       data-print="hide"
       className="sticky top-0 z-10 bg-paper/80 backdrop-blur border-b border-paper-edge"
     >
-      <div className="max-w-[780px] mx-auto px-4 py-3 flex flex-wrap gap-2 items-center justify-between">
+      <div className="max-w-[980px] mx-auto px-4 py-3 flex flex-wrap gap-2 items-center justify-between">
         <div className="flex items-center gap-3">
           <button
             onClick={() => navigate('/')}
@@ -67,18 +67,11 @@ export function PlanActions({
             onClick={() => navigate('/wizard')}
             className="text-sm text-ink-muted hover:text-ink transition"
           >
-            Edit answers
+            Edit rows
           </button>
         </div>
         <div className="flex flex-wrap gap-2">
-          <Button variant="ghost" onClick={onRegenerate}>
-            Regenerate
-          </Button>
-          {view === 'document' ? (
-            <Button onClick={onMakeCard}>
-              Looks good — make my card →
-            </Button>
-          ) : (
+          {view === 'card' ? (
             <>
               <Button variant="secondary" onClick={handlePrint}>
                 Print card
@@ -86,6 +79,23 @@ export function PlanActions({
               <Button onClick={handlePdf} disabled={downloading}>
                 {downloading ? 'Preparing PDF…' : 'Download PDF'}
               </Button>
+            </>
+          ) : view === 'recommendations' ? (
+            <>
+              <Button variant="secondary" onClick={onShowWorksheet}>
+                Back to worksheet
+              </Button>
+              <Button onClick={onShowCard}>Wallet card view →</Button>
+            </>
+          ) : (
+            <>
+              <Button variant="secondary" onClick={handlePrint}>
+                Print worksheet
+              </Button>
+              <Button variant="ghost" onClick={handlePdf} disabled={downloading}>
+                {downloading ? 'Preparing PDF…' : 'Download PDF'}
+              </Button>
+              <Button onClick={onShowCard}>Wallet card view →</Button>
             </>
           )}
         </div>

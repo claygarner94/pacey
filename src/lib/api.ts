@@ -1,16 +1,23 @@
 import type { WizardAnswers } from '../state/wizardStore'
-import { planOutputSchema, type PlanOutput } from './schema'
+import {
+  recommendationOutputSchema,
+  type PlanOutput,
+  type RecommendationOutput,
+} from './schema'
 
-export type GenerateResult =
-  | { ok: true; plan: PlanOutput }
+export type ReviewResult =
+  | { ok: true; recommendations: RecommendationOutput }
   | { ok: false; error: string }
 
-export async function generatePlan(answers: WizardAnswers): Promise<GenerateResult> {
+export async function reviewPlan(
+  plan: PlanOutput,
+  answers: WizardAnswers,
+): Promise<ReviewResult> {
   try {
-    const res = await fetch('/api/generate-plan', {
+    const res = await fetch('/api/recommend-plan', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ answers }),
+      body: JSON.stringify({ plan, answers }),
     })
 
     if (!res.ok) {
@@ -19,11 +26,11 @@ export async function generatePlan(answers: WizardAnswers): Promise<GenerateResu
     }
 
     const json = await res.json()
-    const parsed = planOutputSchema.safeParse(json)
+    const parsed = recommendationOutputSchema.safeParse(json)
     if (!parsed.success) {
-      return { ok: false, error: 'Received a plan in an unexpected format.' }
+      return { ok: false, error: 'Received recommendations in an unexpected format.' }
     }
-    return { ok: true, plan: parsed.data }
+    return { ok: true, recommendations: parsed.data }
   } catch (err) {
     return {
       ok: false,

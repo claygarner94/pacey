@@ -4,7 +4,7 @@
     { "source": "/((?!api/).*)", "destination": "/index.html" }
   ],
   "functions": {
-    "api/generate-plan.ts": {
+    "api/recommend-plan.ts": {
       "maxDuration": 60
     }
   }

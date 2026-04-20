@@ -1,52 +1,59 @@
 import { z } from 'zod'
 
-export const tierLabel = z.enum(['Primary', 'Alternate', 'Contingency', 'Emergency'])
+export const paceMethodSchema = z.object({
+  method: z.string().min(1),
+  detail: z.string().default(''),
+})
 
-export const planTierSchema = z.object({
-  label: tierLabel,
-  channels: z
-    .array(
-      z.object({
-        name: z.string().min(1),
-        rationale: z.string().min(1),
-      }),
-    )
-    .min(1),
-  ownerRole: z.string().min(1),
-  escalationTrigger: z.string().min(1),
-  failureModes: z.array(z.string().min(1)).min(1),
+export const planRowSchema = z.object({
+  audienceLabel: z.string().min(1),
+  contactLabel: z.string().min(1),
+  primary: paceMethodSchema,
+  alternate: paceMethodSchema,
+  contingency: paceMethodSchema,
+  emergency: paceMethodSchema,
+  escalateAfter: z.string().min(1),
+  notes: z.string().default(''),
 })
 
 export const planOutputSchema = z.object({
   displayName: z.string().min(1),
   planDate: z.string().min(1),
-  missionEcho: z.string().min(1),
-  tiers: z.array(planTierSchema).length(4),
-  contactRoster: z.object({
-    columns: z.array(z.string().min(1)).min(2),
-  }),
-  drillSchedule: z.object({
-    cadence: z.string().min(1),
-    whatToTest: z.array(z.string().min(1)).min(1),
-  }),
-  activationChecklist: z
-    .array(
-      z.object({
-        tier: tierLabel,
-        steps: z.array(z.string().min(1)).min(1),
-      }),
-    )
-    .length(4),
-  glossary: z
-    .array(
-      z.object({
-        term: z.string().min(1),
-        definition: z.string().min(1),
-      }),
-    )
-    .min(3),
-  responseWindow: z.string().min(1),
+  ownerContext: z.string().min(1),
+  rows: z.array(planRowSchema).min(1),
+  drillCadence: z.string().min(1),
 })
 
+export const recommendationSeveritySchema = z.enum(['high', 'medium', 'low'])
+
+export const recommendationFieldSchema = z.enum([
+  'primary',
+  'alternate',
+  'contingency',
+  'emergency',
+  'escalateAfter',
+  'notes',
+])
+
+export const recommendationItemSchema = z.object({
+  title: z.string().min(1),
+  severity: recommendationSeveritySchema,
+  issue: z.string().min(1),
+  recommendation: z.string().min(1),
+  targetAudience: z.string().default(''),
+  targetField: recommendationFieldSchema.optional(),
+  proposedMethod: z.string().optional(),
+  proposedDetail: z.string().optional(),
+  proposedText: z.string().optional(),
+})
+
+export const recommendationOutputSchema = z.object({
+  summary: z.string().min(1),
+  items: z.array(recommendationItemSchema).max(6),
+})
+
+export type PaceMethod = z.infer<typeof paceMethodSchema>
+export type PlanRow = z.infer<typeof planRowSchema>
 export type PlanOutput = z.infer<typeof planOutputSchema>
-export type PlanTier = z.infer<typeof planTierSchema>
+export type RecommendationItem = z.infer<typeof recommendationItemSchema>
+export type RecommendationOutput = z.infer<typeof recommendationOutputSchema>

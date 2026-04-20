@@ -75,4 +75,9 @@
   html[data-print-mode="card"] [data-print="card-back"] {
     page-break-after: auto;
   }
+
+  html[data-print-mode="card"] [data-preview="wallet-card"] {
+    transform: none !important;
+    margin-bottom: 0 !important;
+  }
 }

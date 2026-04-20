@@ -1,10 +1,11 @@
 type Props = {
   current: number
+  completed: number
   total: number
 }
 
-export function Progress({ current, total }: Props) {
-  const pct = Math.round((current / total) * 100)
+export function Progress({ current, completed, total }: Props) {
+  const pct = Math.round((completed / total) * 100)
   return (
     <div className="space-y-1.5">
       <div className="flex items-center justify-between text-xs text-ink-subtle">
@@ -15,8 +16,8 @@ export function Progress({ current, total }: Props) {
       </div>
       <div
         role="progressbar"
-        aria-valuenow={current}
-        aria-valuemin={1}
+        aria-valuenow={completed}
+        aria-valuemin={0}
         aria-valuemax={total}
         className="h-1.5 rounded-full bg-paper-edge overflow-hidden"
       >

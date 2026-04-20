@@ -28,6 +28,24 @@ export type ContinuityStake =
   | 'mission-disruption'
   | 'inconvenience'
 
+export type PaceMethodInput = {
+  method: string
+  detail: string
+}
+
+export type AudienceRowInput = {
+  id: string
+  templateKey?: string
+  audienceLabel: string
+  contactLabel: string
+  primary: PaceMethodInput
+  alternate: PaceMethodInput
+  contingency: PaceMethodInput
+  emergency: PaceMethodInput
+  escalateAfter: string
+  notes: string
+}
+
 export type WizardAnswers = {
   // Shared
   persona: Persona
@@ -36,6 +54,8 @@ export type WizardAnswers = {
   techComfort: 'low' | 'medium' | 'high' | ''
   extraNotes: string
   displayName: string
+  ownerContext: string
+  rows: AudienceRowInput[]
 
   // Individual
   people: IndividualPerson[]
@@ -82,6 +102,8 @@ const initial: WizardAnswers = {
   businessChannels: [],
   continuityStakes: [],
   sizeBand: '',
+  ownerContext: '',
+  rows: [],
 }
 
 export const useWizardStore = create<WizardState>((set) => ({
@@ -90,6 +112,23 @@ export const useWizardStore = create<WizardState>((set) => ({
     set((s) => ({ answers: { ...s.answers, ...patch } })),
   reset: () => set({ answers: initial }),
 }))
+
+export function createAudienceRow(
+  patch: Partial<AudienceRowInput> = {},
+): AudienceRowInput {
+  return {
+    id: `row-${Math.random().toString(36).slice(2, 8)}-${Date.now().toString(36)}`,
+    audienceLabel: '',
+    contactLabel: '',
+    primary: { method: '', detail: '' },
+    alternate: { method: '', detail: '' },
+    contingency: { method: '', detail: '' },
+    emergency: { method: '', detail: '' },
+    escalateAfter: '',
+    notes: '',
+    ...patch,
+  }
+}
 
 export function autoDisplayName(a: WizardAnswers): string {
   if (a.displayName.trim()) return a.displayName.trim()

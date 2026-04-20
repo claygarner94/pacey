@@ -33,7 +33,7 @@ export default function About() {
             PACEY is a free, open source tool for generating PACE communication plans.
           </h1>
           <p className="text-lg text-ink-muted">
-            Answer a short set of questions, and an LLM drafts a plan across the four PACE tiers — Primary, Alternate, Contingency, Emergency. Edit it into something that fits your situation, then print it as a wallet card.
+            Answer a short set of questions, build a real PACE matrix across Primary, Alternate, Contingency, and Emergency, then print it as a worksheet or wallet card. AI can review the result, but it does not author the plan for you.
           </p>
         </header>
 
@@ -50,7 +50,7 @@ export default function About() {
             No accounts, no analytics, no server-side logs.
           </p>
           <p className="text-ink-muted">
-            Your wizard answers are sent once to an LLM provider's API to generate a plan, and the response streams back to your browser. Nothing is persisted server-side. When you close the tab, the plan exists only where you chose to save it — a printed card, a downloaded PDF, or nowhere.
+            Your plan is built locally from the rows you enter. If you choose to run the optional AI review, the matrix and review context are sent once to an LLM provider's API for recommendations. Nothing is intentionally persisted server-side. When you close the tab, the plan exists only where you chose to save it — a printed card, a downloaded PDF, or nowhere.
           </p>
         </section>
 
